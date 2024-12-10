@@ -1,7 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.Extensions.Hosting;
 
-app.MapGet("/", () => "Welcome to My Simple Website!");
-app.MapGet("/about", () => "This is a simple C# website example.");
+var builder = FunctionsApplication.CreateBuilder(args);
 
-app.Run();
+builder.ConfigureFunctionsWebApplication();
+
+// Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
+// builder.Services
+//     .AddApplicationInsightsTelemetryWorkerService()
+//     .ConfigureFunctionsApplicationInsights();
+
+builder.Build().Run();
